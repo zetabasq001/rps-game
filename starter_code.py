@@ -23,6 +23,15 @@ class Player:
         pass
 
 
+class HumanPlayer(Player):
+    
+    def move(self):
+        response = input(f"What is your move? {Game.moves}\n")
+        while response not in Game.moves:
+            response = input(f"Please enter: {Game.moves}\n")
+        return response
+
+
 class RockPlayer(Player):
     
     def move(self):
@@ -100,5 +109,5 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(CyclePlayer(), ReflectPlayer())
+    game = Game(HumanPlayer(), RandomPlayer())
     game.play_game()
