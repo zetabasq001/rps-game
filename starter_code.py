@@ -77,37 +77,60 @@ class CyclePlayer(Player):
         self.memory = (self.memory + 1) % len(Game.moves)
         
         
-def beats(one, two):
-    return ((one == 'rock' and two == 'scissors') or
-            (one == 'scissors' and two == 'paper') or
-            (one == 'paper' and two == 'rock'))
-
-
 class Game:
 
     moves = ['rock', 'paper', 'scissors']
 
     def __init__(self, p1, p2):
+        self.round = 1
         self.p1 = p1
         self.p2 = p2
 
 
+    def beats(self, one, two):
+        
+        print(f"Player 1: {one}  Player 2: {two}")
+
+        winner = ((one == 'rock' and two == 'scissors') or
+                (one == 'scissors' and two == 'paper') or
+                (one == 'paper' and two == 'rock'))
+
+        if one == two:
+            print(f"Players Tie Round {self.round}: {one} == {two}\n")
+        elif winner:
+            print(f"Player 1 Wins Round {self.round}: {one} > {two}\n")
+            self.p1.score += 1
+        else:
+            print(f"Player 2 Wins Round {self.round}: {two} > {one}\n")
+            self.p2.score += 1
+
+        print(f"Player 1 score {self.p1.score} | Player 2 score {self.p2.score}\n")
+
     def play_round(self):
         move1 = self.p1.move()
         move2 = self.p2.move()
-        print(f"Player 1: {move1}  Player 2: {move2}")
+        self.round += 1
+        self.beats(move1, move2)
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
 
     def play_game(self):
         print("Game start!")
-        for round in range(5):
-            print(f"Round {round}:")
+        print("Best of 7.\n")
+       
+        while self.p1.score != 4 and self.p2.score != 4:
+            print(f"Round {self.round}")
             self.play_round()
+        
+        if self.p1.score == 4:
+            print("Player 1 Wins!")
+        else:
+            print("Player 2 Wins!")
+
         print("Game over!")
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), RandomPlayer())
+    game = Game(RandomPlayer(), RandomPlayer())
     game.play_game()
