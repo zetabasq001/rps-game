@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-"""This program plays a game of Rock, Paper, Scissors between two Players,
-and reports both Player's scores each round."""
+"""This program plays an expansion of the game of Rock, Paper, Scissors 
+between two Players, and reports both Player's scores each round."""
 
-moves = ['rock', 'paper', 'scissors']
+moves = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 
 """The Player class is the parent class for all of the Players
 in this game"""
@@ -79,7 +79,7 @@ class CyclePlayer(Player):
         
 class Game:
 
-    moves = ['rock', 'paper', 'scissors']
+    moves = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 
     def __init__(self, p1, p2):
         self.round = 1
@@ -93,7 +93,14 @@ class Game:
 
         winner = ((one == 'rock' and two == 'scissors') or
                 (one == 'scissors' and two == 'paper') or
-                (one == 'paper' and two == 'rock'))
+                (one == 'paper' and two == 'rock') or
+                (one == 'rock' and two == 'lizard') or
+                (one == 'lizard' and two == 'spock') or
+                (one == 'spock' and two == 'scissors') or
+                (one == 'scissors' and two == 'lizard') or
+                (one == 'lizard' and two == 'paper') or
+                (one == 'paper' and two == 'spock') or
+                (one == 'spock' and two == 'rock'))
 
         if one == two:
             print(f"Players Tie Round {self.round}: {one} == {two}\n")
@@ -134,5 +141,5 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(RandomPlayer(), RandomPlayer())
+    game = Game(HumanPlayer(), RandomPlayer())
     game.play_game()
