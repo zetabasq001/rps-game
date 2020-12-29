@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
+import random
 
-"""This program plays an expansion of the game of Rock, Paper, Scissors 
+"""This program plays an expansion of the game of Rock, Paper, Scissors
 between two Players, and reports both Player's scores each round."""
 
 moves = ['rock', 'paper', 'scissors', 'spock', 'lizard']
 
 """The Player class is the parent class for all of the Players
 in this game"""
-
-import random
 
 
 class Player:
@@ -24,19 +23,20 @@ class Player:
 
 
 class HumanPlayer(Player):
-    
+
     def move(self):
-        response = input(f"What is your move? {Game.moves}\n")
+        response = input(f"{', '.join(Game.moves)}? >  ")
         while response not in Game.moves:
-            response = input(f"Please enter: {Game.moves}\n")
+            response = input("\nPlease enter one of the following:\n"
+                             f"{', '.join(Game.moves)}? >  ")
         return response
 
 
 class RockPlayer(Player):
-    
+
     def move(self):
         return "rock"
-    
+
 
 class RandomPlayer(Player):
 
@@ -55,10 +55,10 @@ class ReflectPlayer(Player):
             return random.choice(Game.moves)
         else:
             return self.memory.pop()
-        
+
     def learn(self, my_move, their_move):
         self.memory.append(their_move)
-        
+
 
 class CyclePlayer(Player):
 
@@ -75,8 +75,8 @@ class CyclePlayer(Player):
 
     def learn(self, my_move, previous_move):
         self.memory = (self.memory + 1) % len(Game.moves)
-        
-        
+
+
 class Game:
 
     moves = ['rock', 'paper', 'scissors', 'spock', 'lizard']
@@ -86,22 +86,22 @@ class Game:
         self.p1 = p1
         self.p2 = p2
 
-
     def beats(self, one, two):
-        
-        print(f"Player 1: {one}  Player 2: {two}")
+
+        print(f"\nPlayer 1: {one}  Player 2: {two}")
 
         winner = ((one == 'rock' and two == 'scissors') or
-                (one == 'scissors' and two == 'paper') or
-                (one == 'paper' and two == 'rock') or
-                (one == 'rock' and two == 'lizard') or
-                (one == 'lizard' and two == 'spock') or
-                (one == 'spock' and two == 'scissors') or
-                (one == 'scissors' and two == 'lizard') or
-                (one == 'lizard' and two == 'paper') or
-                (one == 'paper' and two == 'spock') or
-                (one == 'spock' and two == 'rock'))
+                  (one == 'scissors' and two == 'paper') or
+                  (one == 'paper' and two == 'rock') or
+                  (one == 'rock' and two == 'lizard') or
+                  (one == 'lizard' and two == 'spock') or
+                  (one == 'spock' and two == 'scissors') or
+                  (one == 'scissors' and two == 'lizard') or
+                  (one == 'lizard' and two == 'paper') or
+                  (one == 'paper' and two == 'spock') or
+                  (one == 'spock' and two == 'rock'))
 
+        print()
         if one == two:
             print(f"Players Tie Round {self.round}: {one} == {two}\n")
         elif winner:
@@ -111,8 +111,10 @@ class Game:
             print(f"Player 2 Wins Round {self.round}: {two} > {one}\n")
             self.p2.score += 1
 
-        print(f"Player 1 score {self.p1.score} | Player 2 score {self.p2.score}\n")
-        print("==================================================================")
+        print(f"Player 1 score {self.p1.score} |,"
+              f"Player 2 score {self.p2.score}\n")
+        print("=============================================",
+              "=====================")
         self.round += 1
 
     def play_round(self):
@@ -122,20 +124,20 @@ class Game:
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
-
     def play_game(self):
-        print("Game start!")
         print("Best of 7.")
-        print("==================================================================")
-       
+        print(f"Start Game:  {', '.join(Game.moves)}, Go!")
+        print("=============================================",
+              "=====================")
+
         while self.p1.score != 4 and self.p2.score != 4:
             print(f"Round {self.round}")
             self.play_round()
-        
+
         if self.p1.score == 4:
-            print("Player 1 Wins!")
+            print("Player 1 Wins Best of 7!")
         else:
-            print("Player 2 Wins!")
+            print("Player 2 Wins Best of 7!")
 
         print("Game over!")
 
