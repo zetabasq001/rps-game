@@ -150,12 +150,13 @@ if __name__ == '__main__':
     opponents = [RockPlayer(), RandomPlayer(), ReflectPlayer(), CyclePlayer()]
     player_names = ["Rock", "Random", "Reflect", "Cycle"]
 
-    response = input(f"Choose your Opponent ({', '.join(player_names)})? >  ").capitalize()
+    response = input("Choose your Opponent "
+                     f"({', '.join(player_names)})? >  ").capitalize()
     while response not in player_names:
         response = input("\nPlease enter one of the following: \n"
                          f"{', '.join(player_names)}? >  ").capitalize()
     print()
-   
+
     print("------------------------------------")
     print(f"Player 2 is {response} Player")
     print("------------------------------------")
