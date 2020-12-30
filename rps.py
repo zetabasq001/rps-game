@@ -25,10 +25,10 @@ class Player:
 class HumanPlayer(Player):
 
     def move(self):
-        response = input(f"{', '.join(Game.moves)}? >  ")
+        response = input(f"{', '.join(Game.moves)}? >  ").lower()
         while response not in Game.moves:
             response = input("\nPlease enter one of the following:\n"
-                             f"{', '.join(Game.moves)}? >  ")
+                             f"{', '.join(Game.moves)}? >  ").lower()
         return response
 
 
@@ -139,9 +139,25 @@ class Game:
         else:
             print("Player 2 Wins Best of 7!")
 
-        print("Game over!")
+        print()
+        print(f"Player 1 score {self.p1.score} | "
+              f"Player 2 score {self.p2.score}\n")
+        print("Game over!\n")
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), RandomPlayer())
+
+    opponents = [RockPlayer(), RandomPlayer(), ReflectPlayer(), CyclePlayer()]
+    player_names = ["Rock", "Random", "Reflect", "Cycle"]
+
+    response = input(f"Choose your Opponent ({', '.join(player_names)})? >  ").capitalize()
+    while response not in player_names:
+        response = input("\nPlease enter one of the following: \n"
+                         f"{', '.join(player_names)}? >  ").capitalize()
+    print()
+   
+    print("------------------------------------")
+    print(f"Player 2 is {response} Player")
+    print("------------------------------------")
+    game = Game(HumanPlayer(), opponents[player_names.index(response)])
     game.play_game()
