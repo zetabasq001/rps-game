@@ -111,9 +111,9 @@ class Game:
             print(f"Player 2 Wins Round {self.round}: {two} > {one}\n")
             self.p2.score += 1
 
-        print(f"Player 1 score {self.p1.score} |,"
+        print(f"Player 1 score {self.p1.score} | "
               f"Player 2 score {self.p2.score}\n")
-        print("=============================================",
+        print("============================================="
               "=====================")
         self.round += 1
 
@@ -127,7 +127,7 @@ class Game:
     def play_game(self):
         print("Best of 7.")
         print(f"Start Game:  {', '.join(Game.moves)}, Go!")
-        print("=============================================",
+        print("============================================="
               "=====================")
 
         while self.p1.score != 4 and self.p2.score != 4:
